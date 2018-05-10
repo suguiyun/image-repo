@@ -186,3 +186,153 @@ public class DepositLogBean {
 ```html 
  	AddressBean result = restClient.get(AddressBean.class, "/ui/users/"+id+"/deposit/BTC/address", null);
 ``` 
+
+## 14.GET /ui/users/{userId}/withdraw/addresses
+ 1.返回的实体类   
+```html  
+	public static class AddressBean {
+    		public long id;
+    		public String currency;
+    		public String address;
+    		public String description;
+    		public long createdAt;
+    	}
+    	
+    	static TypeReference<Map<String, List<AddressBean>>> TYPE_WITHDRAW_ADDRESS_MAP = new TypeReference<Map<String, List<AddressBean>>>() {
+        	};
+```  
+ 2.调用过程（其中100003是用户变量,BTC是变量）
+```html 
+ 	Map<String, List<AddressBean>> result = restClient.get(TYPE_WITHDRAW_ADDRESS_MAP, "/ui/users/100003/withdraw/addresses",
+    				MapUtil.of("currency", "BTC"));
+``` 
+
+## 15.POST /ui/users/{userId}/withdraw/addresses
+ 1.返回的实体类   
+```html  
+public class AddressBean {
+		public long id;
+		public String currency;
+		public String address;
+		public String description;
+		public long createdAt;
+	}
+```  
+ 2.调用过程（其中100003是用户变量）
+```html 
+ 	AddressBean bean = new AddressBean();
+    bean.address = address;
+    bean.currency = currency;
+    bean.description = description;
+    AddressBean addr = restClient.post(AddressBean.class, "/ui/users/100003/withdraw/addresses", bean);
+``` 
+
+## 16.GET /ui/users/{userId}/withdraw/addresses/{id}
+ 1.返回的实体类   
+```html  
+public class AddressBean {
+		public long id;
+		public String currency;
+		public String address;
+		public String description;
+		public long createdAt;
+	}
+```  
+ 2.调用过程（其中100003是用户变量,100004是addressId）
+```html 
+ 	AddressBean result = restClient.get(AddressBean.class, "/ui/users/100003/withdraw/addresses/100004",
+    				null);
+``` 
+
+## 17.POST /ui/users/{userId}/withdraw/addresses/{id}/delete
+ 1.返回的实体类   
+```html  
+```  
+ 2.调用过程（其中100003是用户变量,100004是addressId）
+```html 
+ 	restClient.post(UserController.AddressBean.class, "/ui/users/100003/withdraw/addresses/100004/delete",
+    				null);
+``` 
+
+
+## 18.GET /ui/users/{userId}/withdraw/requests
+ 1.返回的实体类   
+```html  
+public class WithdrawRequestBean {
+		public long id;
+		public String status;
+
+		public String errorCode;
+		public String errorMessage;
+
+		public String currency;
+		public String toAddress;
+
+		public BigDecimal amount;
+		public BigDecimal fee;
+
+		public String tx;
+
+		public boolean cancellable;
+		public long createdAt;
+	}
+	
+	static TypeReference<Map<String, List<WithdrawRequestBean>>> TYPE_WITHDRAW_REQUEST_MAP = new TypeReference<Map<String, List<WithdrawRequestBean>>>() {
+    	};
+```  
+ 2.调用过程（其中100003是用户变量,BTC是变量）
+```html 
+ Map<String, List<WithdrawRequestBean>> result = restClient.get(TYPE_WITHDRAW_REQUEST_MAP, "/ui/users/100003/withdraw/requests",
+ 				MapUtil.of("currency", "BTC"));
+``` 
+
+## 19.POST /ui/users/{userId}/withdraw/requests
+ 1.返回的实体类   
+```html  
+public class WithdrawRequestCreateBean {
+
+		public String currency;
+
+		public long withdrawAddressId;
+
+		public String amount;
+
+	}
+```  
+ 2.调用过程（其中100003是用户变量）
+```html 
+WithdrawRequestCreateBean bean = new WithdrawRequestCreateBean();
+		bean.amount = amount;
+		bean.withdrawAddressId = withdrawAddressId;
+		bean.currency = currency;
+		restClient.post(WithdrawRequestBean.class, "/ui/users/100003/withdraw/requests", bean);
+``` 
+
+## 20.POST /ui/users/{userId}/withdraw/requests/{id}/cancel
+ 1.返回的实体类   
+```html  
+```  
+ 2.调用过程（其中100003是用户变量,100000是提现id）
+```html 
+restClient.post(new TypeReference<Map<String, Boolean>>() {
+		}, "/ui/users/100003/withdraw/requests/100000/cancel", null);
+``` 
+
+## 21.GET /ui/withdraw/rules
+ 1.返回的实体类   
+```html  
+public static class WithdrawRuleBean {
+		public boolean withdrawDisabled;
+		public BigDecimal minimumAmount;
+		public BigDecimal feeRate;
+
+		public BigDecimal minimumFee;
+		public BigDecimal maximumFee;
+	}
+	static TypeReference<Map<String, WithdrawRuleBean>> TYPE_WITHDRAW_RULE_MAP = new TypeReference<Map<String, WithdrawRuleBean>>() {
+    	};
+```  
+ 2.调用过程
+```html 
+Map<String, WithdrawRuleBean> result = restClient.get(TYPE_WITHDRAW_RULE_MAP, "/ui/withdraw/rules", null);
+``` 
