@@ -119,3 +119,70 @@ public class AddApiKeyBean {
     ApiAuthKeyBean apiKey = restClient.post(ApiAuthKeyBean.class, "/ui/users/" + id + "/apiKeys",
     				bean);
 ``` 
+
+## 9.POST /ui/users/{userId}/apiKeys/{apiKey}/delete   
+ 1.调用过程（其中userId是用户变量,apiKey是变量）
+```html 
+ 	restClient.post(new TypeReference<Map<String, Boolean>>() {
+    			}, String.format("/ui/users/%s/apiKeys/%s/delete", userId, apiKey), null);
+``` 
+## 10.POST /ui/users/{userId}/apiKeys/{apiKey}/disable   
+ 1.调用过程（其中id是用户变量,AAAAAYajkw49S2wE6WmjpTVuhbl0DD7n是变量）
+```html 
+ 	boolean result = restClient.post(boolean.class, "/ui/users/" + id + "/apiKeys/AAAAAYajkw49S2wE6WmjpTVuhbl0DD7n/disable",null);
+``` 
+
+## 11.POST /ui/users/{userId}/apiKeys/{apiKey}/enable   
+ 1.调用过程（其中id是用户变量,AAAAAYajkw49S2wE6WmjpTVuhbl0DD7n是变量）
+```html 
+ 	boolean result = restClient.post(boolean.class, "/ui/users/" + id + "/apiKeys/AAAAAYajkw49S2wE6WmjpTVuhbl0DD7n/enable",null);
+``` 
+
+## 12.GET /ui/users/{userId}/deposit/logs 
+ 1.返回的实体类   
+```html  
+public class DepositLogBean {
+
+		public long id;
+
+		public String currency;
+
+		public String toAddress;
+
+		public String uniqueId;
+
+		public BigDecimal amount;
+
+		public int confirms;
+		public int minimumConfirms;
+
+		public boolean depositOk;
+		public boolean depositCancelled;
+
+		public long createdAt;
+	}
+	
+	static TypeReference<Map<String, List<DepositLogBean>>> TYPE_DEPOSIT_MAP = new TypeReference<Map<String, List<DepositLogBean>>>() {
+    	};
+```  
+ 2.调用过程（其中id是用户变量,BTC是变量）
+```html 
+ 	Map<String, List<DepositLogBean>> result = restClient.get(TYPE_DEPOSIT_MAP, "/ui/users/"+id+"/deposit/logs",
+    				MapUtil.of("currency", "BTC"));
+``` 
+
+## 13.GET /ui/users/{userId}/deposit/{currency}/address 
+ 1.返回的实体类   
+```html  
+	public class AddressBean {
+		public long id;
+		public String currency;
+		public String address;
+		public String description;
+		public long createdAt;
+	}
+```  
+ 2.调用过程（其中id是用户变量,BTC是变量）
+```html 
+ 	AddressBean result = restClient.get(AddressBean.class, "/ui/users/"+id+"/deposit/BTC/address", null);
+``` 
