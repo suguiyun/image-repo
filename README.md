@@ -1,7 +1,14 @@
 # ui-api-controller    
  ## 1.GET /ui/deposit/{currency}/rules    
-    
-## 2.GET /ui/orders/{orderId}/refund    
+     1.返回的实体类   
+    ```html  
+    ```  
+     2.调用过程（其中BTC是变量）
+    ```html 
+     Map<String, List<Map<String,Object>>> result = restClient.get(new TypeReference<Map<String, List<Map<String,Object>>>>() {
+     		}, "/ui/deposit/BTC/rules", null);
+    ``` 
+## 2.GET /ui/orders/{orderId}/refund  接口调不通  
   
 ## 3.POST /ui/users 省略..........    
  
