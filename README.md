@@ -60,7 +60,7 @@ public class SpotAccountBean {
 ```  
  2.调用过程（其中id是用户变量,BTC是币种）
 ```html 
- 	Map<String, List<UserController.SpotAccountBean>> result = restClient.get(TYPE_SPOT_ACCOUNT_MAP, "/ui/users/"+ id +"/accounts",
+ 	Map<String, List<SpotAccountBean>> result = restClient.get(TYPE_SPOT_ACCOUNT_MAP, "/ui/users/"+ id +"/accounts",
     				MapUtil.of("currency", "BTC"));
 ``` 
 ## 7.GET /ui/users/{userId}/apiKeys   
