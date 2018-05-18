@@ -83,7 +83,7 @@ public class SpotAccount {
  	LevelFeeRates result = restClient.get(LevelFeeRates.class, "/manage/feeRates/level", null);
 ``` 
 
-## 6.POST /manage/feeRates/level  开始时间太短什么鬼？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1  
+## 6.POST /manage/feeRates/level  开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1  
  1.返回的实体类   
 ```html  
    public class FeeRates{
@@ -127,7 +127,7 @@ public class SpotAccount {
  	SymbolFeeRates result = restClient.get(SymbolFeeRates.class, "/manage/feeRates/symbol", null);
 ``` 
 
-## 9.POST /manage/feeRates/symbol 开始时间太短什么鬼？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1 
+## 9.POST /manage/feeRates/symbol 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1 
  1.返回的实体类   
 ```html  
 参考8的返回对象
@@ -165,7 +165,7 @@ public class SpotAccount {
  	UserFeeRates result = restClient.get(UserFeeRates.class, "/manage/feeRates/user", null);
 ``` 
 
-## 12.POST /manage/feeRates/user 开始时间太短什么鬼？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1
+## 12.POST /manage/feeRates/user 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1
  1.返回的实体类   
 ```html  
 返回对象参考11
