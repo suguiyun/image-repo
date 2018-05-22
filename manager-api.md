@@ -60,33 +60,38 @@ public class SpotAccount {
 ## 4.GET /manage/feeRates/default   
  1.返回的实体类   
 ```html  
-    public class LevelFeeRates{
+    public class FeeRates{
 		public BigDecimal makerFeeRate;
 		public BigDecimal takerFeeRate;
 	}
 ```  
  2.调用过程
 ```html 
- 	LevelFeeRates result = restClient.get(LevelFeeRates.class, "/manage/feeRates/default", null);
+ 	FeeRates result = restClient.get(FeeRates.class, "/manage/feeRates/default", null);
 ``` 
 
-## 5.GET /manage/feeRates/level  有值的但是没有查出东西？===={"makerFeeRate":null,"takerFeeRate":null}   
+## 5.GET /manage/feeRates/level  
  1.返回的实体类   
 ```html  
     public class LevelFeeRates{
-		public BigDecimal makerFeeRate;
-		public BigDecimal takerFeeRate;
+		public Long id;
+        public int level;
+        public Long startTime;
+        public Long createdAt;
+        public BigDecimal makerFeeRate;
+        public BigDecimal takerFeeRate;
 	}
 ```  
  2.调用过程
 ```html 
- 	LevelFeeRates result = restClient.get(LevelFeeRates.class, "/manage/feeRates/level", null);
+ 	Map<String, List<LevelFeeRates>> result = restClient.get(new TypeReference<Map<String, List<LevelFeeRates>>>() {
+                                                             		}, "/manage/feeRates/level", null);
 ``` 
 
 ## 6.POST /manage/feeRates/level  开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1  
  1.返回的实体类   
 ```html  
-   public class FeeRates{
+   public class LevelFeeRates{
    		public Long id;
    		public int level;
    		public Long startTime;
@@ -97,12 +102,12 @@ public class SpotAccount {
 ```  
  2.调用过程(其中feeRates是前端传过来的参数对象)
 ```html 
- 	FeeRates feeRates = new FeeRates();
+ 	LevelFeeRates feeRates = new LevelFeeRates();
     feeRates.setLevel(8);
     feeRates.setStartTime(15266321211113L);  //2019-05-18 16:28:41
     feeRates.setMakerFeeRate(new BigDecimal(0.1));
     feeRates.setTakerFeeRate(new BigDecimal(0.1));
-    FeeRates result = restClient.post(FeeRates.class, "/manage/feeRates/level", feeRates);
+    LevelFeeRates result = restClient.post(LevelFeeRates.class, "/manage/feeRates/level", feeRates);
 ``` 
 ## 7.POST /manage/feeRates/level/{id}/delete   
  1.调用过程（其中100004是feeRates的ID）
@@ -110,7 +115,7 @@ public class SpotAccount {
  	Map<String, Boolean> result = restClient.post(new TypeReference<Map<String, Boolean>>() {}, "/manage/feeRates/level/"+100004+"/delete", null);
 ``` 
 
-## 8.GET /manage/feeRates/symbol   有值的但是没有查出东西？ {"createdAt":null,"id":null,"makerFeeRate":null,"startTime":null,"symbol":null,"takerFeeRate":null}  
+## 8.GET /manage/feeRates/symbol   
 1.返回的实体类   
 ```html  
  public class SymbolFeeRates{
@@ -124,7 +129,8 @@ public class SpotAccount {
 ```  
  2.调用过程(其中feeRates是前端传过来的参数对象)
 ```html 
- 	SymbolFeeRates result = restClient.get(SymbolFeeRates.class, "/manage/feeRates/symbol", null);
+ 	Map<String, List<SymbolFeeRates>> result = restClient.get(new TypeReference<Map<String, List<SymbolFeeRates>>>() {
+ 	}, "/manage/feeRates/symbol", null);
 ``` 
 
 ## 9.POST /manage/feeRates/symbol 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1 
@@ -148,7 +154,7 @@ public class SpotAccount {
  	Map<String, Boolean> result = restClient.post(new TypeReference<Map<String, Boolean>>() {}, "/manage/feeRates/symbol/"+100000+"/delete", null);
 ``` 
 
-## 11.GET /manage/feeRates/user 有值的但是没有查出东西？{"id":null,"createdAt":null,"makerFeeRate":null,"startTime":null,"takerFeeRate":null,"userId":null}
+## 11.GET /manage/feeRates/user 
  1.返回的实体类   
 ```html  
 	public class UserFeeRates{
@@ -162,7 +168,8 @@ public class SpotAccount {
 ```  
  2.调用过程
 ```html 
- 	UserFeeRates result = restClient.get(UserFeeRates.class, "/manage/feeRates/user", null);
+ 	Map<String, List<UserFeeRates>> result = restClient.get(new TypeReference<Map<String, List<UserFeeRates>>>() {
+ 	}, "/manage/feeRates/user", null);
 ``` 
 
 ## 12.POST /manage/feeRates/user 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1
