@@ -1,5 +1,26 @@
-# manager-api-controller    
-## 1.POST /manage/accounts/transfer   
+# manager-api-controller   
+
+## 1.POST /manage/accounts/freeze   
+ 1.返回的实体类   
+```html  
+public class AccountsFreeze
+	{
+		private BigDecimal amount;
+		private String currency;
+		private String flowType;
+		private Long userId;
+	}
+```  
+ 2.调用过程（其中AccountsFreeze是前端传过来的参数对象）
+```html 
+    AccountsFreeze accountsFreeze = new AccountsFreeze();
+    accountsFreeze.setAmount(new BigDecimal(5));
+    accountsFreeze.setCurrency("BTC");
+    accountsFreeze.setFlowType("TRADE_FREEZE");
+    accountsFreeze.setUserId(100003L);
+    BigDecimal result = restClient.post(BigDecimal.class, "/manage/accounts/freeze", accountsFreeze);
+``` 
+## 2.POST /manage/accounts/transfer   
  1.返回的实体类   
 ```html  
 public class SpotAccount {
@@ -28,7 +49,27 @@ public class SpotAccount {
     Map<String, SpotAccount> result = restClient.post(new TypeReference<Map<String, SpotAccount>>() {
     }, "/manage/accounts/transfer", data);
 ``` 
- ## 2.POST /manage/deposits/{currency}/rules   问题：如果amount不是0会报异常信息：{"error":"PARAMETER_INVALID","data":"rules","message":"Must define a rule which amount is zero."}    
+## 3.POST /manage/accounts/unfreeze   
+ 1.返回的实体类   
+```html  
+public class AccountsFreeze
+	{
+		private BigDecimal amount;
+		private String currency;
+		private String flowType;
+		private Long userId;
+	}
+```  
+ 2.调用过程（其中AccountsFreeze是前端传过来的参数对象）
+```html 
+   		AccountsFreeze accountsFreeze = new AccountsFreeze();
+   		accountsFreeze.setAmount(new BigDecimal(3));
+   		accountsFreeze.setCurrency("BTC");
+   		accountsFreeze.setFlowType("TRADE_UNFREEZE");
+   		accountsFreeze.setUserId(100003L);
+   		BigDecimal result = restClient.post(BigDecimal.class, "/manage/accounts/unfreeze", accountsFreeze);
+``` 
+ ## 4.POST /manage/deposits/{currency}/rules   问题：如果amount不是0会报异常信息：{"error":"PARAMETER_INVALID","data":"rules","message":"Must define a rule which amount is zero."}    
  1.返回的实体类   
 ```html  
     public class ConfirmRulesBean {
@@ -55,9 +96,16 @@ public class SpotAccount {
     Map<String, Integer> result = restClient.post(new TypeReference<Map<String, Integer>>() {
     }, "/manage/deposits/"+"BTC"+"/rules", rules);
 ``` 
-## 3.POST /manage/deposits/{id}/audit/{approved}  调不通    
+## 5.POST /manage/deposits/{id}/audit/{approved}  充值相关   
  
-## 4.GET /manage/feeRates/default   
+## 6.GET /manage/exists
+ 1.调用过程（其中uniqueId是前台传过来的参数）
+```html 
+    Map<String, String> query = new HashMap<>();
+    query.put("uniqueId","0000000000640e87ecc00611456fa97c949b93ed326e");
+    Boolean result = restClient.get(Boolean.class, "/manage/exists", query);
+``` 
+## 7.GET /manage/feeRates/default   
  1.返回的实体类   
 ```html  
     public class FeeRates{
@@ -70,7 +118,7 @@ public class SpotAccount {
  	FeeRates result = restClient.get(FeeRates.class, "/manage/feeRates/default", null);
 ``` 
 
-## 5.GET /manage/feeRates/level  
+## 8.GET /manage/feeRates/level  
  1.返回的实体类   
 ```html  
     public class LevelFeeRates{
@@ -88,7 +136,7 @@ public class SpotAccount {
                                                              		}, "/manage/feeRates/level", null);
 ``` 
 
-## 6.POST /manage/feeRates/level  开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1  
+## 9.POST /manage/feeRates/level  开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1  
  1.返回的实体类   
 ```html  
    public class LevelFeeRates{
@@ -109,13 +157,13 @@ public class SpotAccount {
     feeRates.setTakerFeeRate(new BigDecimal(0.1));
     LevelFeeRates result = restClient.post(LevelFeeRates.class, "/manage/feeRates/level", feeRates);
 ``` 
-## 7.POST /manage/feeRates/level/{id}/delete   
+## 10.POST /manage/feeRates/level/{id}/delete   
  1.调用过程（其中100004是feeRates的ID）
 ```html 
  	Map<String, Boolean> result = restClient.post(new TypeReference<Map<String, Boolean>>() {}, "/manage/feeRates/level/"+100004+"/delete", null);
 ``` 
 
-## 8.GET /manage/feeRates/symbol   
+## 11.GET /manage/feeRates/symbol   
 1.返回的实体类   
 ```html  
  public class SymbolFeeRates{
@@ -133,7 +181,7 @@ public class SpotAccount {
  	}, "/manage/feeRates/symbol", null);
 ``` 
 
-## 9.POST /manage/feeRates/symbol 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1 
+## 12.POST /manage/feeRates/symbol 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1 
  1.返回的实体类   
 ```html  
 参考8的返回对象
@@ -148,13 +196,13 @@ public class SpotAccount {
     SymbolFeeRates result = restClient.post(SymbolFeeRates.class, "/manage/feeRates/symbol", feeRates);
 ``` 
 
-## 10.POST /manage/feeRates/symbol/{id}/delete
+## 13.POST /manage/feeRates/symbol/{id}/delete
  1.调用过程（其中100000是symbolfeeRates的ID）
 ```html 
  	Map<String, Boolean> result = restClient.post(new TypeReference<Map<String, Boolean>>() {}, "/manage/feeRates/symbol/"+100000+"/delete", null);
 ``` 
 
-## 11.GET /manage/feeRates/user 
+## 14.GET /manage/feeRates/user 
  1.返回的实体类   
 ```html  
 	public class UserFeeRates{
@@ -172,7 +220,7 @@ public class SpotAccount {
  	}, "/manage/feeRates/user", null);
 ``` 
 
-## 12.POST /manage/feeRates/user 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1
+## 15.POST /manage/feeRates/user 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1
  1.返回的实体类   
 ```html  
 返回对象参考11
@@ -187,13 +235,13 @@ public class SpotAccount {
     UserFeeRates result = restClient.post(UserFeeRates.class, "/manage/feeRates/user", feeRates);
 ``` 
 
-## 13.POST /manage/feeRates/user/{id}/delete
+## 16.POST /manage/feeRates/user/{id}/delete
  1.调用过程(其中100000是userfeeRates的ID)
 ```html 
  	Map<String, Boolean> result = restClient.post(new TypeReference<Map<String, Boolean>>() {}, "/manage/feeRates/user/"+100000+"/delete", null);
 ``` 
 
-## 14.POST /manage/orders/{orderId}/cancel
+## 17.POST /manage/orders/{orderId}/cancel
  1.返回的实体类   
 ```html  
 public class MatchOrders
@@ -223,8 +271,7 @@ public class MatchOrders
  	MatchOrders result = restClient.post(MatchOrders.class, "/manage/orders/" + 100071 + "/cancel", null);
 ``` 
 
-
-## 15.POST /manage/users/enable
+## 18.POST /manage/users/enable
  1.返回的实体类   
 ```html  
 public class Users {
@@ -249,9 +296,7 @@ public class Users {
     Users result = restClient.post(Users.class, "/manage/users/enable",users);
 ``` 
 
-## 16.POST /manage/users/{userId}/{currency}/frozen/fix 接口调不通
-
-## 17.GET /manage/{currency}/deposit/rules
+## 19.GET /manage/{currency}/deposit/rules
  1.返回的实体类   
 ```html  
 public class ConfirmRuleBean {
@@ -266,7 +311,7 @@ public class ConfirmRuleBean {
 ConfirmRuleBean result = restClient.get(ConfirmRuleBean.class, "/manage/" + "BTC" + "/deposit/rules", null);
 ``` 
 
-## 18.POST /manage/{currency}/withdraw/rules
+## 20.POST /manage/{currency}/withdraw/rules
  1.返回的实体类   
 ```html  
 public class WithdrawRule
@@ -290,4 +335,32 @@ public class WithdrawRule
     withdrawRule.setMinimumFee(new BigDecimal(8));
     withdrawRule.setWithdrawDisabled(true);
     WithdrawRule result = restClient.post(WithdrawRule.class, "/manage/" + "BTC" + "/withdraw/rules", withdrawRule);
+``` 
+
+## 21.GET /manage/users/{userId}/accounts/{currency}
+ 1.返回的实体类   
+```html  
+public class SpotAccount {
+    private long id;
+
+	private long userId;
+
+	private String currency;
+
+	private AccountType type;
+
+	private BigDecimal balance;
+
+	private long createdAt;
+
+	private long updatedAt;
+
+	private long version;
+
+}
+```  
+ 2.调用过程(其中100003是参数用户ID，BTC是参数)
+```html 
+    Map<String, List<SpotAccount>> result = restClient.get(new TypeReference<Map<String, List<SpotAccount>>>() {
+    		},"/manage/users/100003/accounts/BTC", null);
 ``` 
