@@ -328,7 +328,7 @@ public class WithdrawRule
 ```  
  2.调用过程(其中BTC是参数,withdrawRule也是参数)
 ```html 
-    WithdrawRule withdra .,  wRule = new WithdrawRule();
+    WithdrawRule withdrawRule = new WithdrawRule();
     withdrawRule.setFeeRate(new BigDecimal(0.1));
     withdrawRule.setMaximumFee(new BigDecimal(10));
     withdrawRule.setMinimumAmount(new BigDecimal(10));
