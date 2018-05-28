@@ -69,7 +69,7 @@ public class AccountsFreeze
    		accountsFreeze.setUserId(100003L);
    		BigDecimal result = restClient.post(BigDecimal.class, "/manage/accounts/unfreeze", accountsFreeze);
 ``` 
- ## 4.POST /manage/deposits/{currency}/rules   问题：如果amount不是0会报异常信息：{"error":"PARAMETER_INVALID","data":"rules","message":"Must define a rule which amount is zero."}    
+ ## 4.POST /manage/deposits/{currency}/rules     
  1.返回的实体类   
 ```html  
     public class ConfirmRulesBean {
@@ -136,7 +136,7 @@ public class AccountsFreeze
                                                              		}, "/manage/feeRates/level", null);
 ``` 
 
-## 9.POST /manage/feeRates/level  开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1  
+## 9.POST /manage/feeRates/level    
  1.返回的实体类   
 ```html  
    public class LevelFeeRates{
@@ -181,7 +181,7 @@ public class AccountsFreeze
  	}, "/manage/feeRates/symbol", null);
 ``` 
 
-## 12.POST /manage/feeRates/symbol 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1 
+## 12.POST /manage/feeRates/symbol  
  1.返回的实体类   
 ```html  
 参考8的返回对象
@@ -220,7 +220,7 @@ public class AccountsFreeze
  	}, "/manage/feeRates/user", null);
 ``` 
 
-## 15.POST /manage/feeRates/user 开始时间必须大于20min？TakerFeeRate大于0.1抛异常Fee rate 0.1499 is greater than allowed maximum fee: 0.1。MakerFeeRate大于0.1抛异常：Fee rate 0.1499 is greater than allowed maximum fee: 0.1
+## 15.POST /manage/feeRates/user 
  1.返回的实体类   
 ```html  
 返回对象参考11
