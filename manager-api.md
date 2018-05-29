@@ -310,7 +310,7 @@ public class ConfirmRuleBean {
 ```  
  2.调用过程(其中BTC是参数)
 ```html 
-ConfirmRuleBean result = restClient.get(ConfirmRuleBean.class, "/manage/" + "BTC" + "/deposit/rules", null);
+Map<String, List<ConfirmRuleBean>> result = restClient.get(new TypeReference<Map<String, List<ConfirmRuleBean>>>() {}, "/manage/" + "BTC" + "/deposit/rules", null);
 ``` 
 
 ## 20.POST /manage/{currency}/withdraw/rules
