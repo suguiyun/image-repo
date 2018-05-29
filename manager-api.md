@@ -18,7 +18,8 @@ public class AccountsFreeze
     accountsFreeze.setCurrency("BTC");
     accountsFreeze.setFlowType("TRADE_FREEZE");
     accountsFreeze.setUserId(100003L);
-    BigDecimal result = restClient.post(BigDecimal.class, "/manage/accounts/freeze", accountsFreeze);
+    Map<String, BigDecimal> result = restClient.post(new TypeReference<Map<String, BigDecimal>>() {
+           }, "/manage/accounts/freeze", accountsFreeze);
 ``` 
 ## 2.POST /manage/accounts/transfer   
  1.返回的实体类   
@@ -67,7 +68,8 @@ public class AccountsFreeze
    		accountsFreeze.setCurrency("BTC");
    		accountsFreeze.setFlowType("TRADE_UNFREEZE");
    		accountsFreeze.setUserId(100003L);
-   		BigDecimal result = restClient.post(BigDecimal.class, "/manage/accounts/unfreeze", accountsFreeze);
+   		Map<String, BigDecimal> result = restClient.post(new TypeReference<Map<String, SpotAccount>>() {
+                }, "/manage/accounts/unfreeze", accountsFreeze);
 ``` 
  ## 4.POST /manage/deposits/{currency}/rules     
  1.返回的实体类   
